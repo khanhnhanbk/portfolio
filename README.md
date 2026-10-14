@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Khanh Nhan — freelance profile site
 
-## Getting Started
+Personal profile site in Vietnamese (`/`) and English (`/en`). Static Next.js 15 (App Router),
+React 19, TypeScript and Tailwind CSS. No database, no backend, no environment variables.
 
-First, run the development server:
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000 (VI) and http://localhost:3000/en (EN)
+npm run build    # production build; / and /en are prerendered as static pages
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Editing content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- All page copy lives in `lib/i18n/vi.ts` (Vietnamese, the source of the `Dictionary` type) and
+  `lib/i18n/en.ts`. A key missing from `en.ts` is a type error, so the two stay in sync.
+- Email, phone, Zalo and project links live in `lib/contact.ts`.
+- Each locale has its own root layout (`app/(vi)/layout.tsx`, `app/(en)/layout.tsx`), so `<html lang>`
+  and metadata are correct per language.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Profile photo
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Put a square photo at `public/avatar.jpg` (at least 320×320 px), then restart `npm run dev` or
+rebuild. Without that file the site shows a "KN" initials circle instead.
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Push this repo to GitHub.
+2. On vercel.com: **Add New → Project**, import the repo.
+3. Framework preset: **Next.js** (auto-detected). No environment variables needed. Click **Deploy**.
+4. Once you know the final URL, update `SITE_URL` in `lib/contact.ts` (used for Open Graph and
+   language alternates) and push again.
